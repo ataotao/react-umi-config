@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "set BROWSER=none&&umi dev",
+    "build": "umi build",
+    "lint": "eslint --ext .js src test",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0-beta.46",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.5",
+    "dva": "^2.1.0",
+    "dva-loading": "^1.0.4",
+    "enquire-js": "^0.2.1",
+    "rc-drawer-menu": "^0.5.7",
+    "react-container-query": "^0.11.0",
+    "react-document-title": "^2.0.3",
+    "umi": "^1.0.0-0",
+    "umi-plugin-dva": "^0.1.5"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-umi": "^0.1.4",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.7.0",
+    "husky": "^0.12.0",
+    "mockjs": "^1.0.1-beta3",
+    "umi-plugin-routes": "^0.1.2"
+  }
+}

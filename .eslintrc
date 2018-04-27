@@ -1,0 +1,12 @@
+{
+    "extends": ["umi", "eslint:recommended", "eslint-config-umi"],
+    "rules": {
+        "no-debugger": 0,
+        "indent": ["warn", 4, { "SwitchCase": 1 }],
+        "no-console": ["off"],
+        "quotes": ["warn", "single"],
+        "semi": ["error", "always"],
+        "react/prop-types": 0,
+        "eqeqeq": 0
+    }
+}
