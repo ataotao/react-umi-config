@@ -13,6 +13,7 @@ import styles from './index.less';
 import pageTitles from '@/common/pageTitles';
 import openPages from '@/common/openPages';
 import Redirect from 'umi/redirect';
+import MainHeaderLayout from './MainHeaderLayout';
 const { Header, Content } = Layout;
 
 let isMobile;
@@ -123,9 +124,11 @@ class MainLayout extends Component {
                     <Icon className={classNames(styles.trigger, 'cur')} type={collapsed ? 'menu-unfold' : 'menu-fold'} onClick={()=>this.handleMenuCollapse(!collapsed)} />
                 </Header>
                 {/* Content */}
-                <Content className={styles.content}>
-                    {children}
-                </Content>
+                <MainHeaderLayout {...this.props}>
+                    <Content className={styles.content}>
+                        {children}
+                    </Content>
+                </MainHeaderLayout>
             </Layout>
         </Layout>;
         return (

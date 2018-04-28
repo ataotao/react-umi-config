@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Row, Form, Select, Input, Button, Divider, Table } from 'antd';
 import SelectComponent from './components/SelectComponent';
-import MainHeader from '@/components/MainHeader';
+import Link from 'umi/link';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const InputGroup = Input.Group;
@@ -41,7 +41,7 @@ class ReviewForm extends Component {
         tableTitle = tableTitle.map(item => {
             let obj = {...item};
             if(item.dataIndex == 'operating') {
-                obj.render = () => <a href="/#/standardmodel/review_detail">编辑</a>;
+                obj.render = () => <Link to="/standardmodel/review/edit">编辑</Link>;
             }else{
                 obj.sorter = (a, b) => {
                     const x = a[item.dataIndex];
@@ -127,62 +127,60 @@ class ReviewForm extends Component {
         };
         
         return (
-            <MainHeader {...this.props} pageLink={['/']}>
-                <Card bordered={false}>
-                    {/* 筛选表单 */}
-                    <Form layout="inline" onSubmit={this.handleSubmit}>
-                        <Row>
-                            <FormItem label="数据源：">
-                                <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={{ style:{ width: 150 }}} options={dataSource} name="dataSource" />
-                            </FormItem>
-                            <FormItem label="审核状态：">
-                                <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={{ style:{ width: 150 }}} options={approvalStatus} name="approvalStatus" />
+            <Card bordered={false}>
+                {/* 筛选表单 */}
+                <Form layout="inline" onSubmit={this.handleSubmit}>
+                    <Row>
+                        <FormItem label="数据源：">
+                            <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={{ style:{ width: 150 }}} options={dataSource} name="dataSource" />
+                        </FormItem>
+                        <FormItem label="审核状态：">
+                            <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={{ style:{ width: 150 }}} options={approvalStatus} name="approvalStatus" />
 
-                            </FormItem>
-                            <FormItem label="品牌：">
-                                <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={brandSelectConfig} options={brandOptions} name="brandOptions" />
-                            </FormItem>
-                            <FormItem label="主机厂：">
-                                <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={brandSelectConfig} options={factoryOptions} name="factoryOptions" />
-                            </FormItem>
-                            <FormItem label="车型：">
-                                <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={modelSelectConfig} options={modelOptions} name="modelOptions" />
-                            </FormItem>
-                            <FormItem>
-                                <Button type="primary" htmlType="submit">搜索</Button>
-                            </FormItem>
-                        </Row>
-                        <Row className="m-t-10">
-                            <InputGroup compact>
-                                {
-                                    modelAttrs.map((item, index) => {
-                                        return (
-                                            <FormItem key={index}>
-                                                {
-                                                    getFieldDecorator('modelAttrInput' + index)(
-                                                        <Input addonBefore={
-                                                            <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={{ style:{ width: 100 }}} options={item} name={'modelAttr' + index} />
-                                                        } style={{ width: '100%' }}  placeholder="输入关键字" />
-                                                    )
-                                                }
-                                            </FormItem>
-                                        );
-                                    })
-                                }
-                                <FormItem>
-                                    <Button icon="plus" onClick={this.addModelAttr}>增加筛选属性</Button>
-                                </FormItem>
-                            </InputGroup>
-                        </Row>
-                    </Form>
-                    {/* 表格 */}
-                    <Divider style={{marginBottom: 15}} />
-                    <Row className="text-right">
-                        <Button type="primary">创建标准车型</Button>
+                        </FormItem>
+                        <FormItem label="品牌：">
+                            <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={brandSelectConfig} options={brandOptions} name="brandOptions" />
+                        </FormItem>
+                        <FormItem label="主机厂：">
+                            <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={brandSelectConfig} options={factoryOptions} name="factoryOptions" />
+                        </FormItem>
+                        <FormItem label="车型：">
+                            <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={modelSelectConfig} options={modelOptions} name="modelOptions" />
+                        </FormItem>
+                        <FormItem>
+                            <Button type="primary" htmlType="submit">搜索</Button>
+                        </FormItem>
                     </Row>
-                    <Table className="m-t-15" columns={tableTitle} rowKey={item => item.num} dataSource={tableList} pagination={pagination} loading={loading} />
-                </Card>
-            </MainHeader>
+                    <Row className="m-t-10">
+                        <InputGroup compact>
+                            {
+                                modelAttrs.map((item, index) => {
+                                    return (
+                                        <FormItem key={index}>
+                                            {
+                                                getFieldDecorator('modelAttrInput' + index)(
+                                                    <Input addonBefore={
+                                                        <SelectComponent getFieldDecorator={getFieldDecorator} selectConfig={{ style:{ width: 100 }}} options={item} name={'modelAttr' + index} />
+                                                    } style={{ width: '100%' }}  placeholder="输入关键字" />
+                                                )
+                                            }
+                                        </FormItem>
+                                    );
+                                })
+                            }
+                            <FormItem>
+                                <Button icon="plus" onClick={this.addModelAttr}>增加筛选属性</Button>
+                            </FormItem>
+                        </InputGroup>
+                    </Row>
+                </Form>
+                {/* 表格 */}
+                <Divider style={{marginBottom: 15}} />
+                <Row className="text-right">
+                    <Button type="primary">创建标准车型</Button>
+                </Row>
+                <Table className="m-t-15" columns={tableTitle} rowKey={item => item.num} dataSource={tableList} pagination={pagination} loading={loading} />
+            </Card>
         );
     }
 }

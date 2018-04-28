@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Row, Col, Button, Table } from 'antd';
-import MainHeader from '@/components/MainHeader';
 // import classNames from 'classnames';
 // import styles from './page.less';
 
@@ -60,7 +59,7 @@ const data3 = [
 ];
 
 
-class Detail extends Component {
+class Edit extends Component {
     state = {
 
     };
@@ -92,29 +91,27 @@ class Detail extends Component {
         });
 
         return (
-            <MainHeader {...this.props} pageLink={['/', '/standardmodel/review']}>
-                <Card bordered={false}>
-                    {/* 关联源车型 */}
-                    <Row align="middle" type="flex">
-                        <Col span={12} className="f20">关联源车型</Col>
-                        <Col span={12} className="text-right"><Button type="primary">解除关联</Button></Col>
-                    </Row>
-                    <Table className="m-t-15" pagination={false} rowSelection={rowSelection} columns={columns1} rowKey={item => item.key} dataSource={data1} loading={this.props.loading}  />
+            <Card bordered={false}>
+                {/* 关联源车型 */}
+                <Row align="middle" type="flex">
+                    <Col span={12} className="f20">关联源车型</Col>
+                    <Col span={12} className="text-right"><Button type="primary">解除关联</Button></Col>
+                </Row>
+                <Table className="m-t-15" pagination={false} rowSelection={rowSelection} columns={columns1} rowKey={item => item.key} dataSource={data1} loading={this.props.loading}  />
 
-                    {/* 审核标准车型 */}
-                    <Row align="middle" type="flex" className="m-t-15">
-                        <Col className="f20">审核标准车型</Col>
-                    </Row>
-                    <Table className="m-t-15" pagination={false} rowSelection={rowSelection} columns={columns2} rowKey={item => item.key} dataSource={data2} loading={this.props.loading}  /> 
+                {/* 审核标准车型 */}
+                <Row align="middle" type="flex" className="m-t-15">
+                    <Col className="f20">审核标准车型</Col>
+                </Row>
+                <Table className="m-t-15" pagination={false} rowSelection={rowSelection} columns={columns2} rowKey={item => item.key} dataSource={data2} loading={this.props.loading}  /> 
 
-                    {/* 审核标准车型 */}
-                    <Row align="middle" type="flex" className="m-t-15">
-                        <Col span={12} className="f20">合并标准车型</Col>
-                        <Col span={12} className="text-right"><Button type="primary">审核通过</Button></Col>
-                    </Row>
-                    <Table className="hideSelectAll m-t-15" pagination={false} rowSelection={rowSelection} columns={columns3} rowKey={item => item.key} dataSource={data3} loading={this.props.loading}  /> 
-                </Card>
-            </MainHeader>
+                {/* 审核标准车型 */}
+                <Row align="middle" type="flex" className="m-t-15">
+                    <Col span={12} className="f20">合并标准车型</Col>
+                    <Col span={12} className="text-right"><Button type="primary">审核通过</Button></Col>
+                </Row>
+                <Table className="hideSelectAll m-t-15" pagination={false} rowSelection={rowSelection} columns={columns3} rowKey={item => item.key} dataSource={data3} loading={this.props.loading}  /> 
+            </Card>
         );
     }
 }
@@ -122,4 +119,4 @@ class Detail extends Component {
 const mapStateToProps = state => {
     return {loading: state.loading.global, list: state.review.list};
 };
-export default connect(mapStateToProps)(Detail);
+export default connect(mapStateToProps)(Edit);

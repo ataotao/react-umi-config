@@ -8,7 +8,23 @@ const menuData = [
         children: [
             {
                 name: '标准车型',
-                path: 'review'
+                path: 'review',
+                children: [
+                    {
+                        name: '标准车型编辑/审核',
+                        path: 'edit',
+                        children: [
+                            {
+                                name: '标准车型详情',
+                                path: 'detail'
+                            }
+                        ]
+                    },
+                    {
+                        name: '创建标准车型',
+                        path: 'create'
+                    }
+                ]
             },
             {
                 name: '批量任务',
