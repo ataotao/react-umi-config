@@ -10,7 +10,6 @@ import { getMenuData } from '@/common/menu';
 import SiderMenu from '@/components/SiderMenu';
 import classNames from 'classnames';
 import styles from './index.less';
-import pageTitles from '@/common/pageTitles';
 import openPages from '@/common/openPages';
 import Redirect from 'umi/redirect';
 import MainHeaderLayout from './MainHeaderLayout';
@@ -73,16 +72,8 @@ class MainLayout extends Component {
         });
     }
 
-    getPageTitle = ()=> {
-        const { location } = this.props;
-        const { pathname } = location;
-        let title = '搜配 - 审核后台';
-        let pathNameArr = pathname.split('/');
-        let pathStr = '/' + pathNameArr[pathNameArr.length - 1];
-        if(pageTitles[pathStr]) {
-            title = `${pageTitles[pathStr]} - 搜配`;
-        }
-        return title;
+    setPageTitle = (pageTitle)=> {
+        return pageTitle ? pageTitle + ' - 搜配' : '审核后台 - 搜配';
     };
 
     handleMenuCollapse = collapsed => {
@@ -92,8 +83,56 @@ class MainLayout extends Component {
         });
     };
 
+
+    // 构造面包屑数据
+    getBreadcrumbData = () => {
+        const {location} = this.props;
+        const menuData = getMenuData();
+        const pathnameArr = location.pathname.split('/');
+        // 首页 标准车型审核 标准车型
+        let breadcrumbData = this.getMeunName()(menuData, pathnameArr);
+        return {
+            pageTitle: breadcrumbData[breadcrumbData.length - 1].breadcrumbName,
+            breadcrumbData
+        };
+        
+    };
+
+    // 获取menuname
+    getMeunName = () => {
+        let breadcrumbData = [];
+        return function getData(menuData, pathnameArr) {
+            if(breadcrumbData.length === 0) {
+                breadcrumbData.push({
+                    breadcrumbName: '首页',
+                    path: '/'
+                });
+            }
+            for (let i = 1; i < pathnameArr.length; i++) {
+                const pathname = pathnameArr[i];
+                for (let j = 0; j < menuData.length; j++) {
+                    const menu = menuData[j];
+                    if(menu.path.endsWith(pathname)) {
+                        breadcrumbData.push({
+                            breadcrumbName: menu.name,
+                            path: menu.path
+                        });
+                        if(menu.children && menu.children.length) {
+                            getData(menu.children, pathnameArr);
+                        }
+                        break;
+                    }
+                }
+                
+            }
+            return breadcrumbData;
+        };
+        
+    };
+
     render() {
         const { children, collapsed, location } = this.props;
+        const {pageTitle, breadcrumbData} = this.getBreadcrumbData();
         if(openPages.includes(location.pathname)){
             // 非mainLayouts布局的页面
             return (
@@ -124,7 +163,7 @@ class MainLayout extends Component {
                     <Icon className={classNames(styles.trigger, 'cur')} type={collapsed ? 'menu-unfold' : 'menu-fold'} onClick={()=>this.handleMenuCollapse(!collapsed)} />
                 </Header>
                 {/* Content */}
-                <MainHeaderLayout {...this.props}>
+                <MainHeaderLayout pageTitle={pageTitle} breadcrumbData={breadcrumbData}>
                     <Content className={styles.content}>
                         {children}
                     </Content>
@@ -132,7 +171,7 @@ class MainLayout extends Component {
             </Layout>
         </Layout>;
         return (
-            <DocumentTitle title={this.getPageTitle()}>
+            <DocumentTitle title={this.setPageTitle(pageTitle)}>
                 <ContainerQuery query={query}>
                     {params =>(
                         <div className={classNames(params)}>{layout}</div>
@@ -145,46 +184,3 @@ class MainLayout extends Component {
 
 const mapStateToProps = ({ main }) => ({ collapsed: main.collapsed });
 export default withRouter(connect(mapStateToProps)(MainLayout));
-
-
-
-
-// import React, { Component } from 'react';
-// import { connect } from 'dva';
-
-
-// import { Route, Switch, Redirect } from 'dva/router';
-// import { Layout, Icon } from 'antd';
-// import DocumentTitle from 'react-document-title';
-// import { enquireScreen } from 'enquire-js';
-// import { ContainerQuery } from 'react-container-query';
-// import { getMenuData } from '../../common/menu';
-// import NotFound from '../../routes/Exception/404';
-// import SiderMenu from '../../components/SiderMenu';
-// import MainHeaderLayout from '..//MainHeaderLayout';
-// import classNames from 'classnames';
-// import styles from './index.less';
-
-// const { Header, Content } = Layout;
-
-
-// class MainLayout extends Component {
-
-//     render() {
-//         const props = this.props;
-//         console.log(props);
-//         if (props.location.path === '/login') {
-//             return <BlankLayout>{ {props.children} }</BlankLayout>
-//         }
-//         return (
-//         <div>
-//             {/* <Header location={location} />
-//             <div className={styles.content}>
-//                 <div className={styles.main}>{children}</div>
-//             </div> */}
-//         </div>
-//         );
-//     }
-// }
-
-// export default withRouter(MainLayout);
