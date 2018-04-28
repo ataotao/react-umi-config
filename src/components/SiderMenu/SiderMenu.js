@@ -69,7 +69,7 @@ class SiderMenu extends Component {
     }
 
     // 初始化Menu默认选项
-    setDefaultMenu = pathname => {
+    setDefaultMenu = pathname => {       
         const condition = pathname === '/';
         let defaultOpenKeys = condition
             ? ['/standardmodel']
@@ -77,6 +77,10 @@ class SiderMenu extends Component {
         let defaultSelectedKeys = condition
             ? ['/standardmodel/review']
             : [pathname];
+        let keysArr = defaultSelectedKeys[0].split('/');
+        if(keysArr.length > 3) {
+            defaultSelectedKeys = [keysArr.filter((item, index) => index < 3).join('/')];
+        }
         return {
             defaultOpenKeys,
             defaultSelectedKeys

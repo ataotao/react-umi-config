@@ -30,7 +30,7 @@ class Login extends Component {
             icon: 'user',
             placeholder: '输入管理员帐号',
             options: {
-                initialValue: 'sopeiadmin',
+                initialValue: '',
                 rules: [{ required: true, max:20, message: '请正确输入管理员帐号!'}]
             }
         },{
@@ -38,7 +38,7 @@ class Login extends Component {
             icon: 'lock',
             placeholder: '输入密码',
             options: {
-                initialValue: 'sopei90opl;./',
+                initialValue: '',
                 rules: [{ required: true, max:20, message: '请正确输入密码!'}]
             }
         }]
