@@ -136,7 +136,7 @@ class MainLayout extends Component {
         if(openPages.includes(location.pathname)){
             // 非mainLayouts布局的页面
             return (
-                <div><SimpleLayout {...this.props}>{ children }</SimpleLayout></div>
+                <div><SimpleLayout {...this.props} pageTitle={this.setPageTitle(pageTitle)} breadcrumbData={breadcrumbData}>{ children }</SimpleLayout></div>
             );
         }
 

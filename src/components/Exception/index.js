@@ -1,8 +1,8 @@
-import React, { createElement } from 'react';
 import classNames from 'classnames';
 import { Button } from 'antd';
 import config from './typeConfig';
 import styles from './index.less';
+import router from 'umi/router';
 
 /**
  * @param {*} 
@@ -11,10 +11,10 @@ import styles from './index.less';
  * desc: 说明
  * img: 背景图
  * actions: 配置此属性时默认的『返回首页』按钮不生效
- * linkElement: 定义链接的元素，默认为 `a`
+ * linkElement: 定义链接的元素，默认为 `span`
  */
 
-const Exception = ({ className, linkElement = 'a', type, title, desc, img, actions, ...rest }) => {
+const Exception = ({ className, linkElement = 'span', type, title, desc, img, actions, ...rest }) => {
     const pageType = type in config ? type : '404';
     const clsString = classNames(styles.exception, className);
     return (
@@ -29,11 +29,7 @@ const Exception = ({ className, linkElement = 'a', type, title, desc, img, actio
                 </div>
                 <div className={styles.actions}>
                     {actions ||
-                        createElement(
-                            linkElement,
-                            { to: '/', href: '/'},
-                            <Button type="primary">返回首页</Button>
-                        )}
+                        <Button type="primary" onClick={()=>router.go(-1)}>返回</Button> }
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 import DocumentTitle from 'react-document-title';
 import { ContainerQuery } from 'react-container-query';
-import pageTitles from '@/common/pageTitles';
 import classNames from 'classnames';
 const query = {
     'screen-xs': {
@@ -24,18 +23,10 @@ const query = {
 };
 
 export default props => {
-    const { location, children } = props;
-    const { pathname } = location;
-    const getPageTitle = ()=> {
-        let title = '搜配 - 审核后台';
-        if(pageTitles[pathname]) {
-            title = `${pageTitles[pathname]} - 搜配`;
-        }
-        return title;
-    };
-    
+    const { children, pageTitle } = props;
+   
     return (
-        <DocumentTitle title={getPageTitle()}>
+        <DocumentTitle title={pageTitle}>
             <ContainerQuery query={query}>
                 {params =>(
                     <div className={classNames(params)}>{children}</div>

@@ -92,7 +92,10 @@ function checkLogin(res) {
     const { dispatch } = window.g_app._store;
     if(res.code == 21001) {
         dispatch(routerRedux.push('/login'));
-        notification.error('请重新登录');
+        notification.error({
+            message:'没有登录',
+            description: '请登录后进行操作'
+        });
         return {
             code: -1,
             msg: '没有登录'
